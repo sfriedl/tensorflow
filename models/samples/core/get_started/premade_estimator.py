@@ -20,7 +20,11 @@ def main(argv):
     # Create feature columns for all features
     my_feature_columns = []
     for key in train_x.keys():
-        my_feature_columns.append(tf.feature_column.numeric_column(key=key))
+        my_feature_columns.append(tf.feature_column.numeric_column(key=key, dtype=tf.float32))
+
+    #alternative
+    feature_columns = [tf.feature_column.numeric_column(name) for name in iris_data.CSV_COLUMN_NAMES[:-1]]
+
 
     # Build 2 hidden layer DNN with 10, 10 units respectively.
     classifier = tf.estimator.DNNClassifier(

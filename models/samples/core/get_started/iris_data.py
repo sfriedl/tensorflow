@@ -8,12 +8,16 @@ CSV_COLUMN_NAMES = ['SepalLength', 'SepalWidth',
                     'PetalLength', 'PetalWidth', 'Species']
 SPECIES = ['Setosa', 'Versicolor', 'Virginica']
 
+def maybe_download():
+    # Download dataset
+    train_path = tf.keras.utils.get_file(fname=TRAIN_URL.split('/')[-1], origin=TRAIN_URL)
+    test_path = tf.keras.utils.get_file(fname=TEST_URL.split('/')[-1], origin=TEST_URL)
+    return (train_path, test_path)
 
 def load_data(y_name='Species'):
     """Parses the csv file in TRAIN_URL and TEST_URL."""
     # Download dataset
-    train_path = tf.keras.utils.get_file(fname=TRAIN_URL.split('/')[-1], origin=TRAIN_URL)
-    test_path = tf.keras.utils.get_file(fname=TEST_URL.split('/')[-1], origin=TEST_URL)
+    train_path, test_path = maybe_download()
 
     # parse csv files
     train = pd.read_csv(train_path, names=CSV_COLUMN_NAMES, header=0)
